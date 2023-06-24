@@ -48,24 +48,33 @@ class PropertiesController < ApplicationController
   #creates a new property and adds to db
   def create
     @property = Property.new(property_params)
+    @address = property_params[:address]
 
-    if @property.save
-    #   redirect_to @property, notice: 'Property was successfully created.'
-      render json: {status: "SUCCESS", message: "property created successfully", data: @property}
+    if validate_address(address)
+      if @property.valid?
+        @property.save
+        render json: {status: "SUCCESS", message: "property created successfully", data: @property}
+      else
+        render json: { errors: property.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render :new
+      flash[:error] = 'Address validation failed. Please try again.'
+      redirect_to new_address_path
     end
+
   end
 
   def edit
   end
 
   #update a property
-  def update
-    if @property.update(property_params)
-      redirect_to @property, notice: 'Property was successfully updated.'
+  def update_properties
+    @property = Property.find(params[:id])
+    if @property.valid?
+      @property.update(property_update_params)
+      render json: { message: 'Property updated successfully' }
     else
-      render :edit
+      render json: { error: @property.errors.full_messages.join(', ') }, status: :unprocessable_entity
     end
   end
 
@@ -73,6 +82,17 @@ class PropertiesController < ApplicationController
   def destroy
     @property.destroy
     redirect_to properties_url, notice: 'Property was successfully destroyed.'
+  end
+
+  #validates address 
+  def validate(address)
+    validated_address = GoogleMapsService.validate_address(address)
+
+    if validated_address
+      return true
+    else
+      return false
+    end
   end
 
   private
@@ -85,6 +105,10 @@ class PropertiesController < ApplicationController
   #defines the structure of the property to be created by the create method
   def property_params
     params.require(:property).permit(:address, :property_type, :bedrooms, :sitting_rooms, :kitchens, :bathrooms, :toilets, :property_owner, :description, :valid_from, :valid_to)
+  end
+
+  def property_update_params
+    params.require(:property).permit(:description, :bedrooms, :sitting_rooms, :kitchens, :bathrooms, :toilets, :valid_to)
   end
 
 end

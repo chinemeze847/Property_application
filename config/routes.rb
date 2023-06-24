@@ -7,5 +7,8 @@ Rails.application.routes.draw do
       get 'filter_by_bathrooms', action: 'filter_by_bathrooms'
       get 'filter_by_address', action: 'filter_by_address'
     end
+    member do
+      patch 'update_properties'
+    end
   end
 end
