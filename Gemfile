@@ -18,7 +18,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-
+gem 'google_maps_service'
 
 gem 'rake', '~> 13.0', '>= 13.0.6'
 

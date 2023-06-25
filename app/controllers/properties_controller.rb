@@ -1,3 +1,6 @@
+require_relative '../services/google_maps_service'
+
+
 class PropertiesController < ApplicationController
   before_action :set_property, only: [:show, :edit, :update, :destroy]
 
@@ -51,10 +54,10 @@ class PropertiesController < ApplicationController
     @address = property_params[:address]
     puts "address:  " +  @address 
 
-    # @is_valid = validate_address(address)
+    # @is_valid = validate_address(@address)
+    # puts " checking validation " + @is_valid 
 
-    if validate_address(address)
-      puts "address valid  " 
+    if validate(@address)
       if @property.valid?
         @property.save
         render json: {status: "SUCCESS", message: "property created successfully", data: @property}
@@ -62,10 +65,9 @@ class PropertiesController < ApplicationController
         render json: { errors: property.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      puts "address not valid  "
+      # puts "address not valid  "
       flash[:error] = 'Address validation failed. Please try again.'
       redirect_to new_address_path
-
     end
 
   end
@@ -92,7 +94,7 @@ class PropertiesController < ApplicationController
 
   #validates address 
   def validate(address)
-    validated_address = GoogleMapsService.validate_address(address)
+    validated_address = GoogleMapsServiceClass.validate_address(address)
 
     if validated_address
       return true

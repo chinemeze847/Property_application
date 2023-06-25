@@ -1,12 +1,14 @@
 require 'google_maps_service'
 
-class GoogleMapsService
+class GoogleMapsServiceClass
   API_KEY = ENV['GOOGLE_MAPS_API_KEY'] # Use your actual Google Maps API key
 
   def self.validate_address(address)
     gmaps = GoogleMapsService::Client.new(key: API_KEY)
 
-    response = gmaps.geocode(address)
+    response = Proc.new do
+      gmaps.geocode(address) 
+    end
 
     if response[:status] == 'OK'
       # Extract relevant data from the API response
