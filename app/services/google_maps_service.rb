@@ -6,9 +6,9 @@ class GoogleMapsServiceClass
   def self.validate_address(address)
     gmaps = GoogleMapsService::Client.new(key: API_KEY)
 
-    response = Proc.new do
-      gmaps.geocode(address) 
-    end
+    puts "gmaps : " + ${gmaps}
+
+    response = gmaps.geocode(address)
 
     if response[:status] == 'OK'
       # Extract relevant data from the API response
