@@ -10,13 +10,14 @@ development:
   password: postgres
 
 test:
-  database: postgres
+  <<: *default
+  database: testdb
   username: postgres
   password: postgres
 
 
 production:
   <<: *default
-  database: postgres
-  username: postgres
-  password: postgres
+  # database: postgres
+  # username: postgres
+  # password: postgres

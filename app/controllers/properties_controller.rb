@@ -49,8 +49,12 @@ class PropertiesController < ApplicationController
   def create
     @property = Property.new(property_params)
     @address = property_params[:address]
+    puts "address:  " +  @address 
+
+    # @is_valid = validate_address(address)
 
     if validate_address(address)
+      puts "address valid  " 
       if @property.valid?
         @property.save
         render json: {status: "SUCCESS", message: "property created successfully", data: @property}
@@ -58,8 +62,10 @@ class PropertiesController < ApplicationController
         render json: { errors: property.errors.full_messages }, status: :unprocessable_entity
       end
     else
+      puts "address not valid  "
       flash[:error] = 'Address validation failed. Please try again.'
       redirect_to new_address_path
+
     end
 
   end

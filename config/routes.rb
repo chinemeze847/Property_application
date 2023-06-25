@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   resources :properties do
     collection do
       get 'properties_by_owner/:owner', action: 'properties_by_owner', as: 'properties_by_owner'

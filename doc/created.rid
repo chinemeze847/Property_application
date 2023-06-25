@@ -1,0 +1,9 @@
+Sat, 24 Jun 2023 14:35:52 +0100
+README.md	Thu, 22 Jun 2023 12:30:23 +0100
+app/controllers/application_controller.rb	Thu, 22 Jun 2023 12:30:23 +0100
+app/controllers/properties_controller.rb	Fri, 23 Jun 2023 23:43:17 +0100
+app/jobs/application_job.rb	Thu, 22 Jun 2023 12:30:23 +0100
+app/mailers/application_mailer.rb	Thu, 22 Jun 2023 12:30:23 +0100
+app/models/application_record.rb	Thu, 22 Jun 2023 12:30:23 +0100
+app/models/property.rb	Thu, 22 Jun 2023 21:32:35 +0100
+app/services/google_maps_service.rb	Fri, 23 Jun 2023 22:39:22 +0100
