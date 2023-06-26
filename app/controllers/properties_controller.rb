@@ -1,7 +1,7 @@
-require_relative '../services/google_maps_service'
-
 
 class PropertiesController < ApplicationController
+  require  'rest-client'
+  
   before_action :set_property, only: [:show, :edit, :update, :destroy]
 
   #retrieves all properties
@@ -51,13 +51,16 @@ class PropertiesController < ApplicationController
   #creates a new property and adds to db
   def create
     @property = Property.new(property_params)
-    @address = property_params[:address]
-    puts "address:  " +  @address 
+    api_key = 'b5d952e8206541a4bfa5464828c733cb'
+    query = property_params[:address]
+    api_url = 'https://api.opencagedata.com/geocode/v1/json'
 
-    # @is_valid = validate_address(@address)
-    # puts " checking validation " + @is_valid 
+    url = api_url + '?' + 'key=' + api_key + '&q=' + query + '&pretty=1' + '&no_annotations=1'
+    response = RestClient.get(url)
+    data = JSON.parse(response.body)
+    results = data['results']
 
-    if validate(@address)
+    if !results.empty?
       if @property.valid?
         @property.save
         render json: {status: "SUCCESS", message: "property created successfully", data: @property}
@@ -66,13 +69,9 @@ class PropertiesController < ApplicationController
       end
     else
       # puts "address not valid  "
-      flash[:error] = 'Address validation failed. Please try again.'
-      redirect_to new_address_path
+      render json:  {status: "404", message: 'Address validation failed. Please try again.'}, status: "404"
     end
 
-  end
-
-  def edit
   end
 
   #update a property
@@ -90,17 +89,6 @@ class PropertiesController < ApplicationController
   def destroy
     @property.destroy
     redirect_to properties_url, notice: 'Property was successfully destroyed.'
-  end
-
-  #validates address 
-  def validate(address)
-    validated_address = GoogleMapsServiceClass.validate_address(address)
-
-    if validated_address
-      return true
-    else
-      return false
-    end
   end
 
   private
