@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source "http://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.2"
@@ -23,6 +23,9 @@ gem 'ffi'
 gem 'rake', '~> 13.0', '>= 13.0.6'
 
 gem 'rswag'
+gem 'dry-schema', '~> 1.13'
+
+gem 'httparty', '0.17.3'
 
 gem 'rest-client'
 
@@ -33,7 +36,5 @@ group :development, :test do
 end
 
 group :development do
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
 end
 
