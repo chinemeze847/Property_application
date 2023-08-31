@@ -14,7 +14,7 @@ module PropertyManager
 
                 search_hash = [""]
                 search_keys = [
-                    :property_address, :property_type, :num_bedrooms, :num_sitting_rooms, :num_kitchen, :num_toilets, :num_bathrooms, :owner
+                    :address, :property_type, :bedrooms, :sitting_rooms, :kitchens, :toilets, :bathrooms, :property_owner
                 ];
 
                 for key in search_keys

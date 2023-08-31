@@ -5,7 +5,11 @@ FROM ruby:3.2.2
 WORKDIR /app
 
 # Install dependencies
-RUN apt-get update  && apt-get install -y build-essential nodejs
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    nodejs
 
 # Copy the Gemfile and Gemfile.lock into the container
 COPY Gemfile Gemfile.lock ./
@@ -19,9 +23,6 @@ RUN bundle install
 # Copy the application code into the container
 COPY . .
 
-
-# Expose the port on which the application will run
-EXPOSE 3000
 
 # Start the Rails server
 CMD ["rails", "server", "-b", "0.0.0.0"]

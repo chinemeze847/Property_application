@@ -23,9 +23,13 @@ gem 'ffi'
 gem 'rake', '~> 13.0', '>= 13.0.6'
 
 gem 'rswag'
+
+gem 'rspec-rails' # ignore if already set up in project
+
 gem 'dry-schema', '~> 1.13'
 
 gem 'httparty', '0.17.3'
+gem 'dry-validation'
 
 gem 'rest-client'
 

@@ -3,7 +3,7 @@ module Api
         class PropertiesController < ApplicationController
 
             def index
-                with_validated_params(FetchPropertiesContract.new) do |params|
+                with_validated_params(PropertyReadContract.new) do |params|
 
                     begin
                         properties = PropertyManager::PropertyReader.call(params)
@@ -11,7 +11,7 @@ module Api
                         handle_response({
                             "success" => true,
                             "data" => properties
-                        }, "successfully fetched all matching properties.")
+                        }, "successfully Read all properties.")
 
                     rescue
                         handle_response({"internal_error" => true})
@@ -22,7 +22,7 @@ module Api
 
             def create 
 
-                with_validated_params(CreatePropertyContract.new) do |params|
+                with_validated_params(PropertyCreateContract.new) do |params|
 
                     begin
 
@@ -40,11 +40,11 @@ module Api
 
             def update
 
-                with_validated_params(UpdatePropertyContract.new) do |params|
+                with_validated_params(PropertyUpdateContract.new) do |params|
                     begin
                         property_response = PropertyManager::PropertyUpdater.call(params)
 
-                        handle_response(property_response, "successfully updated property with id = #{params[:id]}.")
+                        handle_response(property_response, "Update Successful !!! property with id = #{params[:id]}.")
 
                     rescue
                         handle_response({"internal_error" => true})

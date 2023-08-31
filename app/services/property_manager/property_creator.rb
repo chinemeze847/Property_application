@@ -9,7 +9,7 @@ module PropertyManager
 
         def call
 
-            is_valid_address = AddressValidator.call(params[:property_address])
+            is_valid_address = AddressValidator.call(params[:address])
 
             if !is_valid_address
                 return {
