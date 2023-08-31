@@ -30,10 +30,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_124603) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :integer, default: nil, force: :cascade do |t|
-    t.string "username", limit: 255, null: false
-    t.string "email", limit: 255, null: false
-    t.string "phone", limit: 25, null: false
-  end
-
 end
